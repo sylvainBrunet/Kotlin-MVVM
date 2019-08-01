@@ -3,6 +3,7 @@ package ui.post
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import base.BaseViewModel
+import com.example.mvvmexample.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -14,6 +15,9 @@ class PostListViewModel : BaseViewModel() {
     lateinit var postApi: PostApi
     private lateinit var subscription: Disposable
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val errorMessage:MutableLiveData<Int> = MutableLiveData()
+    val errorClickListener = View.OnClickListener { loadPosts() }
+
 
     init{
         loadPosts()
@@ -37,6 +41,7 @@ class PostListViewModel : BaseViewModel() {
 
     private fun onRetrievePostListStart(){
         loadingVisibility.value = View.VISIBLE
+        errorMessage.value = null
 
     }
 
@@ -49,6 +54,7 @@ class PostListViewModel : BaseViewModel() {
     }
 
     private fun onRetrievePostListError(){
+        errorMessage.value = R.string.post_error
 
     }
 }
